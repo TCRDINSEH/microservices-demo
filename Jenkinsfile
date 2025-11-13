@@ -9,16 +9,26 @@ REGION = 'us-central1'
 GCP_CREDENTIALS = 'serviceaccountkey'
 }
 
-stages {
-
-stage('Checkout Code') {
-steps {
- git 'https://github.com/TCRDINSEH/microservices-demo.git' // or use checkout scm
-}
-}
-
-
+ stages {
+       stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/TCRDINSEH/microservices-demo.git',
+                        
+            }
         }
+
+    stage('Authenticate to GCP') {
+      steps {
+        withCredentials([file(credentialsId: "${GCP_CREDENTIALS}", variable: 'GCP_KEYFILE')]) {
+          sh '''
+            echo "🔐 Authenticating to GCP..."
+            gcloud auth activate-service-account --key-file=$GCP_KEYFILE
+            gcloud config set project ${PROJECT_ID}
+          '''
+        }
+      }
+    }
+ }
 
        stage('Deploy to GKE') {
            steps {
@@ -26,20 +36,23 @@ steps {
                    sh '''
                         echo "Deploying to GKE..."
                         echo "Deploying to GKE..." */
-
+                '''
+               }
+           }
+       }
+       
         stage('Deploy to Kubernetes') {
             steps {
-                withCredentials([file(credentialsId: "${GCP_CREDENTIALS}", variable: 'GCLOUD_KEY')])
+                withCredentials([file(credentialsId: "${GCP_CREDENTIALS}", variable: 'GCLOUD_KEY')]) {
                 echo "☸️ Deploying microservices using Kubernetes manifests..."
                 sh '''
                     # Apply all manifests in the kubernetes-manifests directory
                     kubectl apply -f kubernetes-manifests/
+                    sleep 120
+                    kubectl get pods
 
-                    # Optional: verify deployment status for each service
-                    for deploy in $(kubectl get deploy -o name); do
-                        kubectl rollout status $deploy
-                    done
                 '''
+                
             }
         }
     }

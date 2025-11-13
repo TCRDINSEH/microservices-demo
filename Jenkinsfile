@@ -12,7 +12,7 @@ GCP_CREDENTIALS = 'serviceaccountkey'
  stages {
        stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/TCRDINSEH/microservices-demo'
+                git branch: 'main', url: 'https://github.com/TCRDINSEH/microservices-demo.git'
                         
             }
         }

@@ -24,6 +24,7 @@ GCP_CREDENTIALS = 'serviceaccountkey'
             echo "🔐 Authenticating to GCP..."
             gcloud auth activate-service-account --key-file=$GCP_KEYFILE
             gcloud config set project ${PROJECT_ID}
+            gcloud container clusters get-credentials gke-cluster --zone us-central1-a --project applied-pager-476808-j5
           '''
         }
       }

@@ -1,5 +1,5 @@
 pipeline {
-agent any
+    agent any
 
 environment {
 PROJECT_ID = 'applied-pager-476808-j5'
@@ -12,7 +12,7 @@ GCP_CREDENTIALS = 'serviceaccountkey'
  stages {
        stage('Checkout Code') {
             steps {
-                git branch: 'main', url: 'https://github.com/TCRDINSEH/microservices-demo.git',
+                git branch: 'main', url: 'https://github.com/TCRDINSEH/microservices-demo'
                         
             }
         }

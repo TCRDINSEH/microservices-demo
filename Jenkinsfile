@@ -28,7 +28,7 @@ GCP_CREDENTIALS = 'serviceaccountkey'
         }
       }
     }
- }
+ 
 
        stage('Deploy to GKE') {
            steps {
@@ -55,6 +55,7 @@ GCP_CREDENTIALS = 'serviceaccountkey'
                 
             }
         }
+    }
     }
 
     post {

@@ -12,7 +12,7 @@ If you’re using this demo, please **★Star** this repository to show your int
 
 **Note to Googlers:** Please fill out the form at [go/microservices-demo](http://go/microservices-demo).
 
-## Architecture
+## Architecture.
 
 **Online Boutique** is composed of 11 microservices written in different
 languages that talk to each other over gRPC.

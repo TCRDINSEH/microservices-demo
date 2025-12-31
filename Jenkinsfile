@@ -51,20 +51,20 @@ pipeline {
     }
 }
 
-
-        stage('Deploy to GKE') {
+stage('Deploy to GKE') {
     steps {
         sh '''
-            echo "🚀 Deploying to Kubernetes..."
-            kubectl apply -f kubernetes-manifests/
+            echo "🚀 Deploying using Kustomize..."
+            kubectl apply -k kubernetes-manifests/
 
-            echo "⏳ Waiting for all deployments to become ready..."
+            echo "⏳ Waiting for deployments to be ready..."
             for deploy in $(kubectl get deployments -o name); do
-                kubectl rollout status $deploy
+              kubectl rollout status $deploy
             done
         '''
     }
 }
+
 
     }
 
